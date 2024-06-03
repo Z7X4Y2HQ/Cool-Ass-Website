@@ -1,20 +1,31 @@
-import React, { cloneElement } from "react";
+import React, { useState } from "react";
+
+import { useHorizontalScroll } from "./Component/Horizontal Scroll";
+import useWindowDimensions from "./Component/useWindowDimensions";
+import FadeText from "./Component/TextFade";
+
 import Kiznaiver from "./Assets/Kiznaiver.jpg";
 import Anime from "./Assets/Anime.jpg";
 import RWBY from "./Assets/rwby.jpg";
-import useWindowDimensions from "./Component/useWindowDimensions";
+
 import "./App.css";
 
 function App() {
   const { width, height } = useWindowDimensions();
   let imgheight = height;
   let imgWidth = Math.round(imgheight * (16 / 9));
+
+  const realWidth = window.screen.width * window.devicePixelRatio;
+  const realHeight = window.screen.height * window.devicePixelRatio;
+
+  const scrollRef = useHorizontalScroll();
+
   const BGImage = (img) => {
     return {
       backgroundImage: `url(${img})`,
       backgroundSize: "contain",
-      height: imgWidth,
-      width: width > 1530 ? width : imgWidth,
+      height: height > 0.562962963 * realHeight ? imgWidth : width,
+      width: width > 0.796875 * realWidth ? width : imgWidth,
       backgroundRepeat: "no-repeat",
       flexShrink: 0,
     };
@@ -22,31 +33,21 @@ function App() {
 
   return (
     <>
-      <div
-        className="sidebar"
-        style={{
-          height: height - 30,
-        }}
-      >
-        <button className="sidebarButton">G</button>
-        <button className="sidebarButton">G</button>
-        <button className="sidebarButton">G</button>
-        <button className="sidebarButton">G</button>
+      <div className="sideBar">
+        <div className="sidebarNav">
+          <button className="sidebarButton">R</button>
+          <button className="sidebarButton">E</button>
+          <button className="sidebarButton">A</button>
+          <button className="sidebarButton">L</button>
+        </div>
+        <div className="sidebarThemeToggle">
+          <button className="sidebarButton">D</button>
+        </div>
       </div>
-      <div className="scroll-container">
+      <div ref={scrollRef} className="scroll-container">
         <div style={BGImage(Anime)}>
-          <div
-            className="overlayContainer"
-            style={{
-              backgroundColor: "#0008",
-              height: "100vh",
-              width: "100vw",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ color: "white", fontSize: "100px" }}>こんにちは</span>
+          <div className="overlayContainer">
+            <FadeText />
           </div>
         </div>
         <div style={BGImage(Kiznaiver)}></div>

@@ -1,6 +1,12 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url("./Assets/google sans font/GoogleSans-Regular.ttf");
+}
+
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
+  font-family: myFirstFont;
 }
 ::-webkit-scrollbar {
   display: none;
@@ -16,22 +22,87 @@ html body {
   overflow-x: auto;
 }
 
-.sidebar {
+.sidebarNav {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  width: 100px;
-  position: fixed;
-  margin: 14px;
+  margin-left: -200px;
+  margin-top: 28px;
+  padding-bottom: 14px;
   background-color: grey;
-  border-radius: 10px;
+  border-radius: 20px;
+  animation: slide-in 1.5s forwards;
+  animation-delay: 1.9s;
+}
+
+.sidebarThemeToggle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  margin-left: -200px;
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  background-color: grey;
+  border-radius: 20px;
+  animation: slide-in 1.5s forwards;
+  animation-delay: 1.9s;
+}
+
+.sideBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  /* margin-left: 28px; */
+  position: fixed;
+  /* background-color: teal; */
 }
 
 .sidebarButton {
-  margin-top: 14px;
+  margin: 14px;
+  margin-bottom: 0;
   height: 60px;
   width: 60px;
-  border-radius: 10px;
+  border-radius: 20px;
   border-color: transparent;
+}
+
+.greetingText {
+  color: white;
+  font-size: 100px;
+  opacity: 0;
+}
+.fade-text {
+  color: white;
+  font-size: 100px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.overlayContainer {
+  background-color: #0008;
+  height: 100vh;
+  width: 100vw;
+  padding-top: 15px;
+  padding-left: 170px;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+@keyframes slide-in {
+  from {
+    margin-left: -200px;
+  }
+  to {
+    margin-left: 28px;
+  }
 }
