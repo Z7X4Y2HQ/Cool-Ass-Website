@@ -7,10 +7,14 @@ import FadeText from "./Component/TextFade";
 import Kiznaiver from "./Assets/Kiznaiver.jpg";
 import Anime from "./Assets/Anime.jpg";
 import RWBY from "./Assets/rwby.jpg";
+import Stadia from "./Assets/stadia.jpg";
 
 import "./App.css";
 
 function App() {
+  const [time, setTime] = useState(false);
+  setTimeout(() => setTime(true), 5000);
+
   const { width, height } = useWindowDimensions();
   let imgheight = height;
   let imgWidth = Math.round(imgheight * (16 / 9));
@@ -48,6 +52,20 @@ function App() {
         <div style={BGImage(Anime)}>
           <div className="overlayContainer">
             <FadeText />
+            <div className="introContainer">
+              <div className="introText">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vehicula lectus
+                ligula, vel faucibus dui vulputate quis. Etiam nec aliquam libero, non blandit
+                sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+                inceptos himenaeos.
+              </div>
+              <div className="polaroidContainer">
+                <div className="polarioidIMG"></div>
+                <div className="polaroidTitleContainer">
+                  <div className="polaroidTitle">Some Image</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div style={BGImage(Kiznaiver)}></div>

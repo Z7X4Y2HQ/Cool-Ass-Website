@@ -3,26 +3,35 @@ import "../App.css";
 
 const FadeText = () => {
   const [wordIndex, setwordIndex] = useState(0);
-  const [fade, setFade] = useState(false);
+  const [fade, setFade] = useState(true);
+  const [temp, setTemp] = useState(0);
 
   const words = ["Hello", "Hola", "Bonjour", "Ciao", "안녕하세요", "こんにちは", "مرحبا", "Salam"];
   const interval = 2700;
 
-  useEffect(() => {
-    const fadeTimeout = setTimeout(() => setFade(false), interval / 2);
-    const wordTimeout = setTimeout(() => {
-      setwordIndex((prevIndex) => (prevIndex + 1) % words.length);
-      setFade(true);
-    }, interval);
+  setTimeout(() => {
+    setTemp(1);
+  }, 0);
 
-    return () => {
-      clearTimeout(fadeTimeout);
-      clearTimeout(wordTimeout);
-    };
+  useEffect(() => {
+    setTimeout(
+      () => {
+        const fadeTimeout = setTimeout(() => setFade(false), interval / 2);
+        const wordTimeout = setTimeout(() => {
+          setwordIndex((prevIndex) => (prevIndex + 1) % words.length);
+          setFade(true);
+        }, interval);
+        return () => {
+          clearTimeout(fadeTimeout);
+          clearTimeout(wordTimeout);
+        };
+      },
+      temp == 0 ? 3000 : 0
+    );
   }, [wordIndex, interval, words.length]);
 
   return (
-    <div className={`fade-text ${fade ? "fade-in" : "fade-out"}`}>{words[wordIndex] + ","}</div>
+    <div className={`fade-text ${fade ? "fade-in" : "fade-out"}`}>{words[wordIndex] + ", "}</div>
   );
 };
 
