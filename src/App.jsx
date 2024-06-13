@@ -9,25 +9,31 @@ import Kiznaiver from "./Assets/Kiznaiver.jpg";
 import Anime from "./Assets/Anime.jpg";
 import RWBY from "./Assets/rwby.jpg";
 import Stadia from "./Assets/stadia.jpg";
+import Moon from "./Assets/Moon.jpg";
+import Bakery from "./Assets/Bakery.jpg";
 
 import "./App.css";
 
 const Heading = (props) => {
   return (
-    <p
-      style={{
-        fontSize: "4.5vw",
-        lineHeight: 0,
-        textAlign: "center",
-        marginTop: "2.3vw",
-        marginBottom: "0.5vw",
-        opacity: "0",
-        animation: "fade-in 1.5s forwards",
-        animationDelay: props.delay,
-      }}
-    >
-      {props.heading}
-    </p>
+    <div className="test">
+      <p
+        className="testtext"
+        style={{
+          color: "blanchedalmond",
+          fontSize: "4.5vw",
+          lineHeight: 0,
+          textAlign: "center",
+          marginTop: "2.3vw",
+          marginBottom: "0.5vw",
+          opacity: "0",
+          animation: "fade-in 1.5s forwards",
+          animationDelay: props.delay,
+        }}
+      >
+        {props.heading}
+      </p>
+    </div>
   );
 };
 
@@ -37,29 +43,23 @@ function App() {
 
   const { width, height } = useWindowDimensions();
   let imgheight = height;
-  let imgWidth = Math.round(imgheight * (16 / 9));
 
   const realWidth = window.screen.width * window.devicePixelRatio;
   const realHeight = window.screen.height * window.devicePixelRatio;
+
+  let imgWidth = Math.round(imgheight * (realWidth / realHeight));
 
   const scrollRef = useHorizontalScroll();
 
   const BGImage = (img) => {
     return {
       backgroundImage: `url(${img})`,
-      backgroundSize: "contain",
+      backgroundSize: realWidth,
       height: height > 0.562962963 * realHeight ? imgWidth : width,
       width: width > 0.796875 * realWidth ? width : imgWidth,
       backgroundRepeat: "no-repeat",
       flexShrink: 0,
-    };
-  };
-
-  const introContainer = () => {
-    return {
-      paddingLeft: "180px",
-      paddingTop: "130px",
-      paddingRight: "100px",
+      transition: "0s",
     };
   };
 
@@ -85,27 +85,27 @@ function App() {
         </div>
       </div>
       <div ref={scrollRef} className="scroll-container">
-        <div style={BGImage(Anime)}>
+        <div style={BGImage(Bakery)}>
           <div className="overlayContainer">
             <FadeText />
             <div className="intros">
               <div
                 style={{
-                  paddingLeft: "180px",
-                  paddingTop: "130px",
-                  paddingRight: "100px",
+                  paddingLeft: "9.3vw",
+                  paddingTop: "4vw",
+                  paddingRight: "6vw",
                 }}
               >
                 <Polaroid
                   delay="3.8s"
-                  margin="20px"
+                  margin="10px -0px 20px 20px"
                   float="right"
                   image={Stadia}
-                  Title="Some Image"
+                  Title="Stadia Controller"
                 />
                 <div
                   style={{
-                    fontSize: "1.8vw",
+                    fontSize: "1.76vw",
                     color: "white",
                     textAlign: "justify",
                     wordWrap: "normal",
@@ -121,10 +121,10 @@ function App() {
                   </span>
                   <Polaroid
                     delay="4.1s"
-                    margin="20px"
+                    margin="10px 20px 20px -0px"
                     float="left"
-                    image={Stadia}
-                    Title="Some Image"
+                    image={Moon}
+                    Title="Purple Sky"
                   />
                   <br />
                   <Heading delay="4.4s" heading="Some Heading" />
