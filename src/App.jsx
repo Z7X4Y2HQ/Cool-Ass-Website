@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 
+import { FiHome, FiImage } from "react-icons/fi";
+import { LuGamepad2 } from "react-icons/lu";
+import { MdOutlineLightMode } from "react-icons/md";
+import { IoBookOutline } from "react-icons/io5";
+import { GiSpiderWeb } from "react-icons/gi";
+
 import { useHorizontalScroll } from "./Component/Horizontal Scroll";
 import useWindowDimensions from "./Component/useWindowDimensions";
 import FadeText from "./Component/TextFade";
@@ -16,9 +22,8 @@ import "./App.css";
 
 const Heading = (props) => {
   return (
-    <div className="test">
+    <div>
       <p
-        className="testtext"
         style={{
           color: "blanchedalmond",
           fontSize: "4.5vw",
@@ -54,7 +59,7 @@ function App() {
   const BGImage = (img) => {
     return {
       backgroundImage: `url(${img})`,
-      backgroundSize: realWidth,
+      backgroundSize: "contain",
       height: height > 0.562962963 * realHeight ? imgWidth : width,
       width: width > 0.796875 * realWidth ? width : imgWidth,
       backgroundRepeat: "no-repeat",
@@ -75,13 +80,26 @@ function App() {
     <>
       <div className="sideBar">
         <div className="sidebarNav">
-          <button className="sidebarButton">R</button>
-          <button className="sidebarButton">E</button>
-          <button className="sidebarButton">A</button>
-          <button className="sidebarButton">L</button>
+          <button className="sidebarButton">
+            <FiHome className="icons" />
+          </button>
+          <button className="sidebarButton">
+            <GiSpiderWeb className="icons" />
+          </button>
+          <button className="sidebarButton">
+            <LuGamepad2 className="icons" />
+          </button>
+          <button className="sidebarButton">
+            <FiImage className="icons" />
+          </button>
+          <button className="sidebarButton">
+            <IoBookOutline className="icons" />
+          </button>
         </div>
         <div className="sidebarThemeToggle">
-          <button className="sidebarButton">D</button>
+          <button className="sidebarButton">
+            <MdOutlineLightMode className="icons" />
+          </button>
         </div>
       </div>
       <div ref={scrollRef} className="scroll-container">
@@ -98,7 +116,7 @@ function App() {
               >
                 <Polaroid
                   delay="3.8s"
-                  margin="10px -0px 20px 20px"
+                  margin="0.6vw -0px 1.3vw 1.3vw"
                   float="right"
                   image={Stadia}
                   Title="Stadia Controller"
@@ -121,7 +139,7 @@ function App() {
                   </span>
                   <Polaroid
                     delay="4.1s"
-                    margin="10px 20px 20px -0px"
+                    margin="0.6vw 1.3vw 1.3vw -0px"
                     float="left"
                     image={Moon}
                     Title="Purple Sky"
