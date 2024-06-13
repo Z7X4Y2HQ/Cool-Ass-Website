@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useHorizontalScroll } from "./Component/Horizontal Scroll";
 import useWindowDimensions from "./Component/useWindowDimensions";
 import FadeText from "./Component/TextFade";
+import { Polaroid } from "./Component/polaroid";
 
 import Kiznaiver from "./Assets/Kiznaiver.jpg";
 import Anime from "./Assets/Anime.jpg";
@@ -10,6 +11,25 @@ import RWBY from "./Assets/rwby.jpg";
 import Stadia from "./Assets/stadia.jpg";
 
 import "./App.css";
+
+const Heading = (props) => {
+  return (
+    <p
+      style={{
+        fontSize: "4.5vw",
+        lineHeight: 0,
+        textAlign: "center",
+        marginTop: "2.3vw",
+        marginBottom: "0.5vw",
+        opacity: "0",
+        animation: "fade-in 1.5s forwards",
+        animationDelay: props.delay,
+      }}
+    >
+      {props.heading}
+    </p>
+  );
+};
 
 function App() {
   const [time, setTime] = useState(false);
@@ -35,6 +55,22 @@ function App() {
     };
   };
 
+  const introContainer = () => {
+    return {
+      paddingLeft: "180px",
+      paddingTop: "130px",
+      paddingRight: "100px",
+    };
+  };
+
+  const FadeInDelay = (delay) => {
+    return {
+      opacity: "0",
+      animation: "fade-in 1.5s forwards",
+      animationDelay: delay + "s",
+    };
+  };
+
   return (
     <>
       <div className="sideBar">
@@ -52,17 +88,55 @@ function App() {
         <div style={BGImage(Anime)}>
           <div className="overlayContainer">
             <FadeText />
-            <div className="introContainer">
-              <div className="introText">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vehicula lectus
-                ligula, vel faucibus dui vulputate quis. Etiam nec aliquam libero, non blandit
-                sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-                inceptos himenaeos.
-              </div>
-              <div className="polaroidContainer">
-                <div className="polarioidIMG"></div>
-                <div className="polaroidTitleContainer">
-                  <div className="polaroidTitle">Some Image</div>
+            <div className="intros">
+              <div
+                style={{
+                  paddingLeft: "180px",
+                  paddingTop: "130px",
+                  paddingRight: "100px",
+                }}
+              >
+                <Polaroid
+                  delay="3.8s"
+                  margin="20px"
+                  float="right"
+                  image={Stadia}
+                  Title="Some Image"
+                />
+                <div
+                  style={{
+                    fontSize: "1.8vw",
+                    color: "white",
+                    textAlign: "justify",
+                    wordWrap: "normal",
+                  }}
+                >
+                  <span style={FadeInDelay(3.5)}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vehicula lectus
+                    ligula, vel faucibus dui vulputate quis. Etiam nec aliquam libero, non blandit
+                    sapien. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+                    inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nulla vehicula lectus ligula, vel faucibus dui vulputate quis. Etiam nec aliquam
+                    libero, non blandit sapien. Class aptent taciti sociosqu ad litora torquent per
+                  </span>
+                  <Polaroid
+                    delay="4.1s"
+                    margin="20px"
+                    float="left"
+                    image={Stadia}
+                    Title="Some Image"
+                  />
+                  <br />
+                  <Heading delay="4.4s" heading="Some Heading" />
+                  <br />
+                  <span style={FadeInDelay(4.7)}>
+                    nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit. Nulla vehicula lectus ligula, vel faucibus dui vulputate quis.
+                    Etiam nec aliquam libero, non blandit sapien. Class aptent taciti sociosqu ad
+                    litora torquent per conubia nostra, per inceptos himenaeos.Lorem ipsum dolor sit
+                    amet, consectetur adipiscing elit. Nulla vehicula lectus ligula, vel faucibus
+                    dui vulputate quis. Etiam nec aliquam libero.{" "}
+                  </span>
                 </div>
               </div>
             </div>
