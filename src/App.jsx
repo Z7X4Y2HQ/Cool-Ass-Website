@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { FiHome, FiImage } from "react-icons/fi";
+import { FiHome, FiImage, FiUser } from "react-icons/fi";
 import { LuGamepad2 } from "react-icons/lu";
 import { MdOutlineLightMode } from "react-icons/md";
 import { IoBookOutline } from "react-icons/io5";
 import { GiSpiderWeb } from "react-icons/gi";
 
 import { useHorizontalScroll } from "./Component/Horizontal Scroll";
-import useWindowDimensions from "./Component/useWindowDimensions";
 import FadeText from "./Component/TextFade";
+import { MousePosition } from "./Component/MousePosition";
 import { Polaroid } from "./Component/polaroid";
 
 import Kiznaiver from "./Assets/Kiznaiver.jpg";
@@ -19,6 +19,7 @@ import Moon from "./Assets/Moon.jpg";
 import Bakery from "./Assets/Bakery.jpg";
 
 import "./App.css";
+import { BiZoomIn } from "react-icons/bi";
 
 const Heading = (props) => {
   return (
@@ -43,25 +44,18 @@ const Heading = (props) => {
 };
 
 function App() {
-  const [time, setTime] = useState(false);
-  setTimeout(() => setTime(true), 5000);
-
-  const { width, height } = useWindowDimensions();
-  let imgheight = height;
-
-  const realWidth = window.screen.width * window.devicePixelRatio;
-  const realHeight = window.screen.height * window.devicePixelRatio;
-
-  let imgWidth = Math.round(imgheight * (realWidth / realHeight));
-
   const scrollRef = useHorizontalScroll();
+  const [hover, setHover] = useState({ hover: false, name: "" });
+
+  let top = MousePosition().MouseY;
+  let left = MousePosition().MouseX;
 
   const BGImage = (img) => {
     return {
       backgroundImage: `url(${img})`,
-      backgroundSize: "contain",
-      height: height > 0.562962963 * realHeight ? imgWidth : width,
-      width: width > 0.796875 * realWidth ? width : imgWidth,
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      width: "100vw",
       backgroundRepeat: "no-repeat",
       flexShrink: 0,
       transition: "0s",
@@ -78,27 +72,77 @@ function App() {
 
   return (
     <>
+      <div
+        style={{
+          position: "absolute",
+          opacity: hover.hover ? "1" : "0",
+          top: top,
+          left: left,
+          zIndex: 2,
+          backgroundColor: "blanchedalmond",
+          borderRadius: "0.65vw",
+          fontSize: "1vw",
+          margin: "0.6vw",
+          padding: "0.4vw 0.6vw",
+          color: "black",
+          transition: "0.15s",
+        }}
+      >
+        {hover.name}
+      </div>
       <div className="sideBar">
         <div className="sidebarNav">
-          <button className="sidebarButton">
+          <button
+            onMouseEnter={() => setHover({ hover: true, name: "Home" })}
+            onMouseLeave={() => setHover({ hover: false, name: "Home" })}
+            className="sidebarButton"
+          >
             <FiHome className="icons" />
           </button>
-          <button className="sidebarButton">
+          <button
+            onMouseEnter={() => setHover({ hover: true, name: "Web" })}
+            onMouseLeave={() => setHover({ hover: false, name: "Web" })}
+            className="sidebarButton"
+          >
             <GiSpiderWeb className="icons" />
           </button>
-          <button className="sidebarButton">
+          <button
+            onMouseEnter={() => setHover({ hover: true, name: "Game" })}
+            onMouseLeave={() => setHover({ hover: false, name: "Game" })}
+            className="sidebarButton"
+          >
             <LuGamepad2 className="icons" />
           </button>
-          <button className="sidebarButton">
+          <button
+            onMouseEnter={() => setHover({ hover: true, name: "Gallery" })}
+            onMouseLeave={() => setHover({ hover: false, name: "Gallery" })}
+            className="sidebarButton"
+          >
             <FiImage className="icons" />
           </button>
-          <button className="sidebarButton">
+          <button
+            onMouseEnter={() => setHover({ hover: true, name: "Writing" })}
+            onMouseLeave={() => setHover({ hover: false, name: "Writing" })}
+            className="sidebarButton"
+          >
             <IoBookOutline className="icons" />
           </button>
         </div>
-        <div className="sidebarThemeToggle">
-          <button className="sidebarButton">
+        <div className="sidebarNav">
+          <button
+            onMouseEnter={() => setHover({ hover: true, name: "Theme" })}
+            onMouseLeave={() => setHover({ hover: false, name: "Theme" })}
+            className="sidebarButton"
+          >
             <MdOutlineLightMode className="icons" />
+          </button>
+          <button
+            style={{ borderRadius: "20vw" }}
+            onMouseEnter={() => setHover({ hover: true, name: "User" })}
+            onMouseLeave={() => setHover({ hover: false, name: "User" })}
+            className="sidebarButton"
+          >
+            <FiUser className="icons" />
           </button>
         </div>
       </div>

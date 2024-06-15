@@ -22,6 +22,7 @@ export function Polaroid(props) {
       }),
       animation: "fade-in 1.5s forwards",
       animationDelay: props.delay,
+      transition: "0.2s",
     },
     polarioidIMG: {
       backgroundColor: "white",
@@ -32,7 +33,7 @@ export function Polaroid(props) {
       width: "17vw",
       height: "19vw",
       ...(isHovered && {
-        height: "22.6vw",
+        height: "21.4vw",
       }),
       borderRadius: "0.65vw",
       transition: "0.2s",
@@ -64,11 +65,7 @@ export function Polaroid(props) {
       color: "black",
       ...(isHovered && {
         fontSize: "1.34vw",
-        backgroundColor: "blanchedalmond",
-        display: "inline-block",
-        borderRadius: "0.65vw",
         margin: "0.6vw",
-        padding: "0.35vw 0.45vw",
         opacity: 1,
       }),
     },
