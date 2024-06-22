@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 
-const FadeText = () => {
+export const FadeText = (props) => {
   const [wordIndex, setwordIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const [temp, setTemp] = useState(0);
 
-  const words = ["Hello", "Hola", "Bonjour", "Ciao", "안녕하세요", "こんにちは", "مرحبا", "Salam"];
   const interval = 2700;
 
   setTimeout(() => {
@@ -18,7 +17,7 @@ const FadeText = () => {
       () => {
         const fadeTimeout = setTimeout(() => setFade(false), interval / 2);
         const wordTimeout = setTimeout(() => {
-          setwordIndex((prevIndex) => (prevIndex + 1) % words.length);
+          setwordIndex((prevIndex) => (prevIndex + 1) % props.array.length);
           setFade(true);
         }, interval);
         return () => {
@@ -28,11 +27,11 @@ const FadeText = () => {
       },
       temp == 0 ? 3000 : 0
     );
-  }, [wordIndex, interval, words.length]);
+  }, [wordIndex, interval, props.array.length]);
 
   return (
-    <div className={`fade-text ${fade ? "fade-in" : "fade-out"}`}>{words[wordIndex] + ", "}</div>
+    <div className={`${props.class} ${fade ? "fade-in" : "fade-out"}`}>
+      {props.array[wordIndex]}
+    </div>
   );
 };
-
-export default FadeText;

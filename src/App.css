@@ -69,10 +69,9 @@ html body {
   border-radius: 1vw;
   border-color: transparent;
   background-color: blanchedalmond;
-  font-size: 0.8vw;
 }
 
-.fade-text {
+.greeting-text {
   color: var(--headingColor);
   font-size: var(--headingSize);
   opacity: 0;
@@ -84,6 +83,18 @@ html body {
   text-align: center;
   animation: slide-away 1.5s forwards;
   animation-delay: 2s;
+}
+
+.fade-text {
+  color: var(--headingColor);
+  font-size: var(--headingSize);
+  opacity: 0;
+  transition: opacity 0.7s ease-in-out;
+  position: absolute;
+  top: 2vw;
+  left: 9vw;
+  transform: translate(0, 0);
+  text-align: left;
 }
 
 .overlayContainer {
@@ -113,6 +124,19 @@ html body {
   margin-top: 0.5vw;
 }
 
+.hoverBox {
+  position: absolute;
+  z-index: 2;
+  background-color: blanchedalmond;
+  border-radius: 0.65vw;
+  font-size: 1vw;
+  margin: 0.6vw;
+  padding: 0.4vw 0.6vw;
+  color: black;
+  transition: 0.15s;
+  box-shadow: 0.2vw 0.2vw 0.5vw #998d7b;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -125,6 +149,21 @@ html body {
 
 .fade-out {
   opacity: 0;
+}
+
+.highlightedText {
+  background-color: blanchedalmond;
+  display: inline-block;
+  border-radius: 0.4vw;
+  color: black;
+  padding: 0vw 0.3vw;
+  font-size: 1.5vw;
+  text-decoration: "none";
+}
+
+.underlinedText {
+  text-decoration: underline;
+  text-decoration-color: blanchedalmond;
 }
 
 @keyframes slide-away {

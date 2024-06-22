@@ -6,8 +6,9 @@ export function Polaroid(props) {
 
   const styles = {
     polaroidContainer: {
+      fontSize: 0,
       backgroundColor: "blanchedalmond",
-      margin: props.margin,
+      margin: props.float == "left" ? "0.6vw 1.3vw 1.3vw -0vw" : "0.6vw -0vw 1.3vw 1.3vw",
       flexShrink: 0,
       opacity: "0",
       display: "flex",
@@ -29,11 +30,11 @@ export function Polaroid(props) {
       backgroundImage: `url(${props.image})`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
-      backgroundPosition: "bottom",
+      backgroundPosition: "center bottom",
       width: "17vw",
       height: "19vw",
       ...(isHovered && {
-        height: "21.4vw",
+        height: "21.6vw",
       }),
       borderRadius: "0.65vw",
       transition: "0.2s",
@@ -60,7 +61,7 @@ export function Polaroid(props) {
       display: "inline-block",
       borderRadius: "0.65vw",
       margin: 0,
-      padding: "0.35vw 0.45vw",
+      padding: "0.4vw 0.6vw",
       opacity: 0,
       color: "black",
       ...(isHovered && {
