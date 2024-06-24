@@ -9,7 +9,7 @@ import { LuGamepad2 } from "react-icons/lu";
 import { LuSun } from "react-icons/lu";
 
 import { useIntersectionObserver } from "./Component/useIntersectionObserver";
-import { useHorizontalScroll } from "./Component/Horizontal Scroll";
+import { useHorizontalScroll } from "./Component/HorizontalScroll";
 import { SideBarButton } from "./Component/SideBarButton";
 import { Polaroid } from "./Component/polaroid";
 import { FadeText } from "./Component/TextFade";
@@ -27,6 +27,9 @@ import Me from "./Assets/me.png";
 import "./App.css";
 
 const Important = (props) => {
+  let display = "inline-block";
+  if (props.display == "") {
+  }
   return (
     <>
       <span style={{ transition: "0.2s" }} className={props.class}>
@@ -35,6 +38,7 @@ const Important = (props) => {
     </>
   );
 };
+
 const Heading = (props) => {
   return (
     <div>
@@ -65,6 +69,12 @@ function App() {
   const [underlined, setUnderlined] = useState({
     class: "",
     setting: "Underline",
+  });
+
+  const [apologyBoxDisplay, setApologyBoxDisplay] = useState({
+    display: "none",
+    index: 0,
+    opacity: 0,
   });
 
   const scrollRef = useHorizontalScroll();
@@ -99,17 +109,15 @@ function App() {
   const game = ["Unity", "C#"];
 
   const [ref, isVisible] = useIntersectionObserver();
-  const [ref2, isVisible2] = useIntersectionObserver();
 
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && apologyBoxDisplay.index == 0) {
+      setApologyBoxDisplay({ display: "flex", index: 1, opacity: 0 });
+      setTimeout(() => {
+        setApologyBoxDisplay({ display: "flex", index: 1, opacity: 1 });
+      }, 200);
     }
   }, [isVisible]);
-
-  useEffect(() => {
-    if (isVisible2) {
-    }
-  }, [isVisible2]);
 
   const BGImage = (img, position) => {
     return {
@@ -133,6 +141,38 @@ function App() {
 
   return (
     <>
+      <div
+        style={{
+          display: apologyBoxDisplay.display,
+          opacity: apologyBoxDisplay.opacity,
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+          position: "fixed",
+          zIndex: 10000,
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            backgroundColor: "#000000dd",
+          }}
+        >
+          <button
+            style={{ float: "right" }}
+            onClick={() => {
+              setApologyBoxDisplay({ display: "flex", index: 2, opacity: 0 });
+              setTimeout(() => {
+                setApologyBoxDisplay({ display: "none", index: 1, opacity: 0 });
+              }, 400);
+            }}
+          >
+            [X]
+          </button>
+        </div>
+      </div>
       <div className="sideBar">
         <div className="sidebarNav">
           <SideBarButton link="#home" name="Home" icon={<FiHome className="icons" />} />
@@ -410,15 +450,15 @@ function App() {
                     <Important
                       class={highlighted.class}
                       text={`and... hm, Z7X4Y2HQ is calling me on the phone... yes? Yes i did. I was about to 
-                        start on 2022- OH... I'm sorry... No i`}
+                        start on 2022- OH... I'm sorry... No i undrstand,`}
                     />
                     <Important
                       class={highlighted.class}
-                      text={`Understand, I won't make that mistake aga- HUH no Wait, HEY... He umm... he just fired me for writing about him in Third`}
+                      text={`I won't make that mistake aga- HUH no Wait, HEY... He umm... he just fired me for writing about him in Third Person`}
                     />
                     <Important
                       class={highlighted.class}
-                      text={`Third Person Perspective... he said he hates that "SHIT" and will be taking over from here on... `}
+                      text={`Perspective... he said he hates that "SHIT" and will be taking over from here on... `}
                     />
                     <br />
                     {/* <Important class={"highlightedText"} text="DISCLAIMER" />
@@ -494,7 +534,7 @@ function App() {
         </div>
         <div style={BGImage(RWBY)}>
           <div id="game" className="overlayContainer">
-            <div ref={ref2} style={{ position: "absolute" }}>
+            <div style={{ position: "absolute" }}>
               <div className="intros">
                 <FadeText class="fade-text" array={game} />
                 {/* <Heading delay="0s" heading="Game Development" alignment="center" /> */}
