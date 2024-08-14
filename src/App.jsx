@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 
+import { MdOutlineSignalCellular4Bar, MdFormatUnderlined, MdOutlinePhone } from "react-icons/md";
 import { FiHome, FiImage, FiUser, FiCamera } from "react-icons/fi";
-import { MdFormatUnderlined } from "react-icons/md";
-import { IoBookOutline } from "react-icons/io5";
+import { IoBatteryFull, IoBookOutline } from "react-icons/io5";
 import { FaHighlighter } from "react-icons/fa";
+import { IoMdAirplane } from "react-icons/io";
 import { GiSpiderWeb } from "react-icons/gi";
 import { LuGamepad2 } from "react-icons/lu";
 import { LuSun } from "react-icons/lu";
@@ -62,19 +63,21 @@ const Heading = (props) => {
 };
 
 function App() {
+  const [ended, setEnded] = useState(false);
+  const [picked, setPicked] = useState(false);
+  const [pickUp, setPickUp] = useState(false);
+  const [callButtonClass, setCallButtonClass] = useState({
+    background: "",
+    callerScreen: "pickupButton",
+  });
+
   const [highlighted, setHighlighted] = useState({
-    class: "",
+    class: "highlightedText",
     setting: "Highlightn't",
   });
   const [underlined, setUnderlined] = useState({
     class: "",
     setting: "Underline",
-  });
-
-  const [apologyBoxDisplay, setApologyBoxDisplay] = useState({
-    display: "none",
-    index: 0,
-    opacity: 0,
   });
 
   const scrollRef = useHorizontalScroll();
@@ -110,15 +113,6 @@ function App() {
 
   const [ref, isVisible] = useIntersectionObserver();
 
-  useEffect(() => {
-    if (isVisible && apologyBoxDisplay.index == 0) {
-      setApologyBoxDisplay({ display: "flex", index: 1, opacity: 0 });
-      setTimeout(() => {
-        setApologyBoxDisplay({ display: "flex", index: 1, opacity: 1 });
-      }, 200);
-    }
-  }, [isVisible]);
-
   const BGImage = (img, position) => {
     return {
       backgroundImage: `url(${img})`,
@@ -141,45 +135,17 @@ function App() {
 
   return (
     <>
-      <div
-        style={{
-          display: apologyBoxDisplay.display,
-          opacity: apologyBoxDisplay.opacity,
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100vw",
-          height: "100vh",
-          position: "fixed",
-          zIndex: 10000,
-        }}
-      >
-        <div
-          style={{
-            width: "300px",
-            height: "300px",
-            backgroundColor: "#000000dd",
-          }}
-        >
-          <button
-            style={{ float: "right" }}
-            onClick={() => {
-              setApologyBoxDisplay({ display: "flex", index: 2, opacity: 0 });
-              setTimeout(() => {
-                setApologyBoxDisplay({ display: "none", index: 1, opacity: 0 });
-              }, 400);
-            }}
-          >
-            [X]
-          </button>
-        </div>
-      </div>
       <div className="sideBar">
         <div className="sidebarNav">
           <SideBarButton link="#home" name="Home" icon={<FiHome className="icons" />} />
-          <SideBarButton link="#web" name="Web" icon={<GiSpiderWeb className="icons" />} />
-          <SideBarButton link="#game" name="Game" icon={<LuGamepad2 className="icons" />} />
-          <SideBarButton link="#" name="Photography" icon={<FiCamera className="icons" />} />
-          <SideBarButton link="#" name="Writing" icon={<IoBookOutline className="icons" />} />
+          {picked && (
+            <>
+              <SideBarButton link="#web" name="Web" icon={<GiSpiderWeb className="icons" />} />
+              <SideBarButton link="#game" name="Game" icon={<LuGamepad2 className="icons" />} />
+              <SideBarButton link="#" name="Photography" icon={<FiCamera className="icons" />} />
+              <SideBarButton link="#" name="Writing" icon={<IoBookOutline className="icons" />} />
+            </>
+          )}
         </div>
         <div className="sidebarNav">
           <SideBarButton
@@ -206,7 +172,7 @@ function App() {
               <div
                 style={{
                   paddingLeft: "9.3vw",
-                  paddingTop: "4vw",
+                  paddingTop: "5.8vw",
                   paddingRight: "6vw",
                 }}
               >
@@ -360,8 +326,8 @@ function App() {
                   paddingRight: "6vw",
                 }}
               >
-                <Polaroid delay="0s" float="left" image={Moon} Title="Purple Sky" />
-                <Polaroid delay="0s" float="left" image={Stadia} Title="Stadia Controller" />
+                <Polaroid delay="5s" float="left" image={Moon} Title="Purple Sky" />
+                <Polaroid delay="5.3s" float="left" image={Stadia} Title="Stadia Controller" />
                 <div
                   style={{
                     fontSize: "1.76vw",
@@ -370,7 +336,7 @@ function App() {
                     wordWrap: "normal",
                   }}
                 >
-                  <span style={FadeInDelay(0)}>
+                  <span style={FadeInDelay(5.6)}>
                     {highlighted.class == "" && (
                       <Important
                         class={underlined.class}
@@ -445,158 +411,226 @@ function App() {
                     <Important class={underlined.class} text={"which was approximately"} />
                     <Important class={"highlightedText"} text={"75,000 words"} />
                     <Important class={underlined.class} text={"long."} />
-                    <Important class={"highlightedText"} text={"2022"} />
-                    <Important class={underlined.class} text="came" />
-                    <Important
-                      class={highlighted.class}
-                      text={`and... hm, Z7X4Y2HQ is calling me on the phone... yes? Yes i did. I was about to 
-                        start on 2022- OH... I'm sorry... No i undrstand,`}
-                    />
-                    <Important
-                      class={highlighted.class}
-                      text={`I won't make that mistake aga- HUH no Wait, HEY... He umm... he just fired me for writing about him in Third Person`}
-                    />
-                    <Important
-                      class={highlighted.class}
-                      text={`Perspective... he said he hates that "SHIT" and will be taking over from here on... `}
-                    />
-                    <br />
-                    {/* <Important class={"highlightedText"} text="DISCLAIMER" />
-                    <Important
-                      class={"highlightedText"}
-                      text={`"This doesn't meet any industry standards or whatever. It was just him playing around, implementing different things he knew`}
-                    />
-                    <Important
-                      class={"highlightedText"}
-                      text={`he could. Nor it has some advanced or complex new tech, Its just React with CSS,  and Maybe some backend in the future`}
-                    />
-                    <Important class={"highlightedText"} text={`who knows."`} />
-                    <Important
-                      class={highlighted.class}
-                      text={`"Maybe i should make a Visual Novel out of this" `}
-                    />
-                    <Important class={underlined.class} text={`he thought.`} /> */}
+                    {!ended && (
+                      <>
+                        <Important class={"highlightedText"} text={"2022"} />
+                        <Important class={underlined.class} text="came" />
+                        <br />
+                        <br />
+                        <Important
+                          class={"highlightedText"}
+                          text={`and... hm, Z7X4Y2HQ is calling me on the phone...`}
+                        />
+                        <span
+                          style={{
+                            transition: "0.5s",
+                          }}
+                          className={callButtonClass.background}
+                        ></span>
+                        <span className={callButtonClass.callerScreen}>
+                          {!pickUp && (
+                            <span
+                              onClick={() => {
+                                setCallButtonClass({
+                                  background: "callerScreenBG",
+                                  callerScreen: "callerScreen",
+                                });
+                                setPickUp(true);
+                              }}
+                              className="highlightedText"
+                            >
+                              Pick Up?
+                            </span>
+                          )}
+                          {pickUp && (
+                            <div className="phoneScreen">
+                              <div className="phoneContainer">
+                                <div style={{ paddingLeft: "0.7vw" }}>09:11</div>
+                                <div className="notificationBarRight">
+                                  <IoMdAirplane
+                                    style={{ fontSize: "1.5vw", transform: "rotate(-90deg)" }}
+                                  />
+                                  <IoBatteryFull style={{ fontSize: "1.6vw" }} />
+                                </div>
+                              </div>
+                              <div
+                                style={{ fontSize: "1vw", textAlign: "center", paddingTop: "2vw" }}
+                              >
+                                Call from
+                              </div>
+                              <div style={{ fontSize: "3vw", textAlign: "center" }}>Him :{"("}</div>
+                              <div className="callControlContainer">
+                                <a
+                                  onClick={() => {
+                                    setPickUp(true);
+                                    setCallButtonClass({
+                                      background: "callerScreenBG",
+                                      callerScreen: "dialogueScreen",
+                                    });
+                                  }}
+                                  href="#"
+                                >
+                                  <div className="attend">
+                                    <MdOutlinePhone />
+                                  </div>
+                                </a>
+                                <a
+                                  onClick={() => {
+                                    setEnded(true);
+                                    setPicked(false);
+                                    setPickUp(false);
+                                  }}
+                                  href="#"
+                                >
+                                  <div className="decline">
+                                    <MdOutlinePhone />
+                                  </div>
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                        </span>
+                      </>
+                    )}
+                    {ended && (
+                      <>
+                        <br />
+                        <br />
+                        <Important class={highlighted.class} text={"Seriously... ? "} />
+                        <Important class={highlighted.class} text={"ತ⁠_⁠ತ"} />
+                      </>
+                    )}
                   </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div style={BGImage(Kiznaiver)}>
-          <div id="web" className="overlayContainer">
-            <div ref={ref} style={{ position: "absolute" }}>
-              <div className="intros">
-                <FadeText class="fade-text" array={web} />
-                <div
-                  style={{
-                    paddingLeft: "9.3vw",
-                    paddingTop: "4vw",
-                    paddingRight: "6vw",
-                  }}
-                >
-                  <Polaroid delay="0.6s" float="right" image={Stadia} Title="Stadia Controller" />
-                  <Polaroid delay="0.9s" float="left" image={Moon} Title="Purple Sky" />
-                  <div
-                    style={{
-                      fontSize: "1.76vw",
-                      color: "white",
-                      textAlign: "justify",
-                      wordWrap: "normal",
-                    }}
-                  >
-                    <span style={FadeInDelay(1.2)}>
-                      nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit. Nulla vehicula lectus ligula, vel faucibus dui vulputate
-                      quis. Etiam nec aliquam libero, non blandit sapien. Class aptent taciti
-                      sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.Lorem
-                      ipsum dolor sit amet, consectetur adipiscing elit. Nulla vehicula lectus
-                      ligula, vel faucibus dui vulputate quis. Etiam nec aliquam libero. nostra, per
-                      inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Nulla vehicula lectus ligula, vel faucibus dui vulputate quis.aliquam libero,
-                      non blandit sapien aliquam libero, non blandit sapien aliquam libero, as{" "}
-                      <br />
-                      Class aptent taciti ad litora torquent per conubia vulputate.
-                      <Heading
-                        delay="0.3s"
-                        margin="-2vw 0 2vw 0"
-                        heading="Web Development"
-                        alignment="right"
+        {picked && (
+          <>
+            <div style={BGImage(Kiznaiver)}>
+              <div id="web" className="overlayContainer">
+                <div style={{ position: "absolute" }}>
+                  <div className="intros">
+                    <FadeText class="fade-text" array={web} />
+                    <div
+                      style={{
+                        paddingLeft: "9.3vw",
+                        paddingTop: "4vw",
+                        paddingRight: "6vw",
+                      }}
+                    >
+                      <Polaroid
+                        delay="0.6s"
+                        float="right"
+                        image={Stadia}
+                        Title="Stadia Controller"
                       />
-                      aliquam libero, non blandit sapien. Class aptent taciti sociosqu ad litora
-                      torquent per conubia nostra, per inceptos himenaeos.Lorem ipsum dolor sit
-                      amet, consectetur adipiscing elit.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style={BGImage(RWBY)}>
-          <div id="game" className="overlayContainer">
-            <div style={{ position: "absolute" }}>
-              <div className="intros">
-                <FadeText class="fade-text" array={game} />
-                {/* <Heading delay="0s" heading="Game Development" alignment="center" /> */}
-                <div
-                  style={{
-                    paddingLeft: "9.3vw",
-                    paddingTop: "4vw",
-                    paddingRight: "6vw",
-                  }}
-                >
-                  <Polaroid
-                    delay="0s"
-                    margin="0.6vw 1.3vw 0 0"
-                    float="left"
-                    image={Stadia}
-                    Title="Stadia Controller"
-                  />
-                  <Polaroid
-                    delay="0s"
-                    margin="0.6vw 1.3vw 0 0"
-                    float="left"
-                    image={Moon}
-                    Title="Purple Sky"
-                  />
-                  <div
-                    style={{
-                      fontSize: "1.76vw",
-                      color: "white",
-                      textAlign: "justify",
-                      wordWrap: "normal",
-                      marginBottom: "-4vw",
-                    }}
-                  >
-                    <span style={FadeInDelay(0)}>
-                      nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit. Nulla vehicula lectus ligula, vel faucibus dui vulputate
-                      quis. Etiam nec aliquam libero, non blandit sapien. Class aptent taciti
-                      sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.Lorem
-                      ipsum dolor sit amet, consectetur adipiscing elit. Nulla vehicula lectus
-                      ligula, vel faucibus dui vulputate quis. Etiam nec aliquam libero. nostra, per
-                      inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Nulla vehicula lectus ligula, vel dui vulputate quis. Etiam nec aliquam{" "}
-                      <span
+                      <Polaroid delay="0.9s" float="left" image={Moon} Title="Purple Sky" />
+                      <div
                         style={{
-                          fontSize: "4.06vw",
-                          float: "left",
-                          marginRight: "1.4vw",
-                          color: "blanchedalmond",
+                          fontSize: "1.76vw",
+                          color: "white",
+                          textAlign: "justify",
+                          wordWrap: "normal",
                         }}
                       >
-                        Game Development
-                      </span>
-                      libero, non blandit sapien. Class aptent taciti sociosqu ad litora torquent
-                      per conubia nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet,
-                      consectetur adipiscing elit.
-                    </span>
+                        <span style={FadeInDelay(1.2)}>
+                          nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur
+                          adipiscing elit. Nulla vehicula lectus ligula, vel faucibus dui vulputate
+                          quis. Etiam nec aliquam libero, non blandit sapien. Class aptent taciti
+                          sociosqu ad litora torquent per conubia nostra, per inceptos
+                          himenaeos.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                          vehicula lectus ligula, vel faucibus dui vulputate quis. Etiam nec aliquam
+                          libero. nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet,
+                          consectetur adipiscing elit. Nulla vehicula lectus ligula, vel faucibus
+                          dui vulputate quis.aliquam libero, non blandit sapien aliquam libero, non
+                          blandit sapien aliquam libero, as <br />
+                          Class aptent taciti ad litora torquent per conubia vulputate.
+                          <Heading
+                            delay="0.3s"
+                            margin="-2vw 0 2vw 0"
+                            heading="Web Development"
+                            alignment="right"
+                          />
+                          aliquam libero, non blandit sapien. Class aptent taciti sociosqu ad litora
+                          torquent per conubia nostra, per inceptos himenaeos.Lorem ipsum dolor sit
+                          amet, consectetur adipiscing elit.
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+            <div style={BGImage(RWBY)}>
+              <div id="game" className="overlayContainer">
+                <div style={{ position: "absolute" }}>
+                  <div className="intros">
+                    <FadeText class="fade-text" array={game} />
+                    {/* <Heading delay="0s" heading="Game Development" alignment="center" /> */}
+                    <div
+                      style={{
+                        paddingLeft: "9.3vw",
+                        paddingTop: "4vw",
+                        paddingRight: "6vw",
+                      }}
+                    >
+                      <Polaroid
+                        delay="0s"
+                        margin="0.6vw 1.3vw 0 0"
+                        float="left"
+                        image={Stadia}
+                        Title="Stadia Controller"
+                      />
+                      <Polaroid
+                        delay="0s"
+                        margin="0.6vw 1.3vw 0 0"
+                        float="left"
+                        image={Moon}
+                        Title="Purple Sky"
+                      />
+                      <div
+                        style={{
+                          fontSize: "1.76vw",
+                          color: "white",
+                          textAlign: "justify",
+                          wordWrap: "normal",
+                          marginBottom: "-4vw",
+                        }}
+                      >
+                        <span style={FadeInDelay(0)}>
+                          nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet, consectetur
+                          adipiscing elit. Nulla vehicula lectus ligula, vel faucibus dui vulputate
+                          quis. Etiam nec aliquam libero, non blandit sapien. Class aptent taciti
+                          sociosqu ad litora torquent per conubia nostra, per inceptos
+                          himenaeos.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                          vehicula lectus ligula, vel faucibus dui vulputate quis. Etiam nec aliquam
+                          libero. nostra, per inceptos himenaeos. Lorem ipsum dolor sit amet,
+                          consectetur adipiscing elit. Nulla vehicula lectus ligula, vel dui
+                          vulputate quis. Etiam nec aliquam{" "}
+                          <span
+                            style={{
+                              fontSize: "4.06vw",
+                              float: "left",
+                              marginRight: "1.4vw",
+                              color: "blanchedalmond",
+                            }}
+                          >
+                            Game Development
+                          </span>
+                          libero, non blandit sapien. Class aptent taciti sociosqu ad litora
+                          torquent per conubia nostra, per inceptos himenaeos. Lorem ipsum dolor sit
+                          amet, consectetur adipiscing elit.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
